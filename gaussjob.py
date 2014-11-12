@@ -25,28 +25,20 @@ class gaussjob:
     
     ## Produces an inmate with the given id, name and sentence in years.
     ## If not provided, default sentence is 10 years.
-    def __init__(self, jobid, queue, state, ncpus, nodes, time, command, filename, last20=[]):
+    def __init__(self, jobid='', state='', filename='', last20=[], walltime = False):
         self.jobid = jobid
-        self.queue = queue
         self.state = state
-        self.ncpus = ncpus
-        self.nodes = nodes
-        self.time = time
-        self.command = command
         self.filename = filename
         self.last20 = last20
+	self.walltime = walltime
     
     ## __repr__: Inmate -> String
     ## Produces a string listing the number, name and sentence of self.
     def __repr__(self):
         return "JobID: " + str(self.jobid) + ", " + \
-               "Queue: " + self.queue + ", " + \
                "State: " + self.state + ", " + \
-               "# CPUs: " + str(self.ncpus) + ", " + \
-               "Nodes: " + self.nodes + ", " + \
-               "Time: " + self.time + ", " + \
-               "Command: " + self.command + ", " + \
-               "Filename: " + self.filename
+               "Filename: " + self.filename + ", " + \
+               "Walltime Status: " + str(self.walltime)
     
     ## __eq__: Inmate Inmate -> Boolean
     ## Produces True iff self and other represent the same prisoner.
