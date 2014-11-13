@@ -121,16 +121,12 @@ for i in done_jobids:
 
 print walltime_resubs
 
+walltime_resubs = set(walltime_resubs)
+
 fo = open('sqsub_batch_resub', 'w')
 fo.writelines(walltime_resubs)
 fo.close()
 
-#Little piece to find a delete duplicates before submitting the files to the Queue
-with open('sqsub_batch_resub.txt', 'r') as f:
-    files_batch_sqsub_list = [line.strip() for line in f]
-    print set(files_batch_sqsub_list) #set funciton goes through list returns only unique values
-    # I don't know wheteher I can close the files or have it overwrite at this stage 
-    
 
 #subprocess.call(['chmod 757 sqsub_batch_resub'],shell=True)
 #subprocess.call(['./sqsub_batch_resub'],shell=True)
