@@ -2,7 +2,7 @@
 ##       Luke Melo        ##
 ## University of Waterloo ##
 ##     Hopkins Group      ##
-##       10/20/2014       ##
+##       11/14/2014       ##
 ## caretaker_framework.py ##
 ##         v1.1           ##
 ############################
@@ -122,25 +122,19 @@ for i in done_jobids:
 print walltime_resubs
 
 ###########################
-## this code can get rid of duplicates in linear runtime
+## this code can get rid of duplicates in O(n^2) runtime in the worst case.
+## don't think we can get better than this
 # example list with duplicates
-L = [1,2,3,4,5,6,7,8,3,4,5,6,3,2,5,6,7,6,9]
+# L = [1,2,3,4,5,6,7,8,3,4,5,6,3,2,5,6,7,6,9]
 # L = walltime_resubs
 # create new list of unique elements
 L_unique = []
 # loop through L once to find duplicates
-for i in range(len(L)):
-    if L[i] not in L_unique:
-        L_unique.append(L[i])
-# print both L and L_unique for comparison
-
-print L        
-print L_unique
-
-# walltime_resubs = L_unique
-
-
-### walltime_resubs = set(walltime_resubs)
+for i in range(len(walltime_resubs)):
+    if walltime_resubs[i] not in L_unique:
+        L_unique.append(walltime_resubs[i])
+# reset walltime_resubs to the unique list
+walltime_resubs = L_unique
 
 fo = open('sqsub_batch_resub', 'w')
 fo.writelines(walltime_resubs)
