@@ -121,7 +121,26 @@ for i in done_jobids:
 
 print walltime_resubs
 
-walltime_resubs = set(walltime_resubs)
+###########################
+## this code can get rid of duplicates in linear runtime
+# example list with duplicates
+L = [1,2,3,4,5,6,7,8,3,4,5,6,3,2,5,6,7,6,9]
+# L = walltime_resubs
+# create new list of unique elements
+L_unique = []
+# loop through L once to find duplicates
+for i in range(len(L)):
+    if L[i] not in L_unique:
+        L_unique.append(L[i])
+# print both L and L_unique for comparison
+
+print L        
+print L_unique
+
+# walltime_resubs = L_unique
+
+
+### walltime_resubs = set(walltime_resubs)
 
 fo = open('sqsub_batch_resub', 'w')
 fo.writelines(walltime_resubs)
