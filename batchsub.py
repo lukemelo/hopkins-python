@@ -1,3 +1,12 @@
+############################
+##       Luke Melo        ##
+## University of Waterloo ##
+##     Hopkins Group      ##
+##       11/24/2014       ##
+##      batchsub.py       ##
+##         v1.0           ##
+############################
+
 import os
 
 print 'Creating filedir.txt'
@@ -23,4 +32,3 @@ if len(l_write) > 0:
         if raw_input('Submit ' + str(len(l_write)) + ' jobs? [y,n]: ') == 'y':
             os.system('chmod 757 nlgn_batchsub')
             os.system('./nlgn_batchsub')
-
