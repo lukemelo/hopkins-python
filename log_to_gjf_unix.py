@@ -22,19 +22,25 @@ backsteps = 0
 #backsteps = 2**32
 #####################################################
 
-## DFTB Parameters
-#link0_cmds = []
-#job_keywords = '# opt dftb scf=(maxconventionalcycles=150,xqc)'
-#skf_dir = '/home/gaztick/skf/'
-#job_title = 'DFTB 4-Aminobenzoic Acid MeOH Clustering'
-#new_gjf_dir = 'new_gjfs'
+# DFTB Parameters
+link0_cmds = []
+job_keywords = '# opt dftb scf=(maxconventionalcycles=150,xqc)'
+skf_dir = '/home/gaztick/skf/'
+job_title = 'DFTB: 4-Aminobenzoic Acid MeOH Clustering'
+new_gjf_dir = 'DFTB'
 
-# DFT Parameters:
-link0_cmds = ['%mem=8gb','%nprocs=8']
+## DFT Parameters:
+#link0_cmds = ['%mem=8gb','%nprocs=8']
 #job_keywords = '# opt freq b3lyp/6-31+g(d,p)'
-job_keywords = '# opt freq b3lyp/6-31+g(d,p) geom=connectivity EmpiricalDispersion=GD3'
-job_title = 'DFT 4-Aminobenzoic Acid MeOH Clustering'
-new_gjf_dir = 'new_gjfs'
+#job_title = 'DFT: 4-Aminobenzoic Acid MeOH Clustering'
+#new_gjf_dir = 'DFT'
+
+## DFT GD3 Parameters:
+#link0_cmds = ['%mem=8gb','%nprocs=8']
+#job_keywords = '# opt freq b3lyp/6-31+g(d,p)'
+#job_keywords = '# opt freq b3lyp/6-31+g(d,p) geom=connectivity EmpiricalDispersion=GD3'
+#job_title = 'DFT-GD3: 4-Aminobenzoic Acid MeOH Clustering'
+#new_gjf_dir = 'GD3'
 
 
 ######################################
@@ -307,7 +313,7 @@ for j in range(len(log_filenames)):
     #print con_write
 
     # write .gjf files
-    new_filenames.append(log_filenames[j][:-4] + '_' + str(j+1) + '.gjf')
+    new_filenames.append(log_filenames[j][:-4] + '_' + new_gjf_dir + '_' + str(j+1) + '.gjf')
     fw = open(new_filenames[j],'w')
     fw.writelines(link0_cmds)
     fw.write(keywords)
@@ -339,3 +345,4 @@ for j in range(len(new_filenames)):
 del link0_cmds
 del job_keywords
 del keywords
+
