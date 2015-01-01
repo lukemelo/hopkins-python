@@ -4,7 +4,7 @@
 ##     Hopkins Group      ##
 ##       01/01/2015       ##
 ##   log_to_gjf_unix.py   ##
-##         v1.2           ##
+##         v1.3           ##
 ############################
 """
 Created on Sun Dec 21 23:27:32 2014
@@ -28,6 +28,12 @@ job_keywords = '# opt dftb scf=(maxconventionalcycles=150,xqc)'
 skf_dir = '/home/gaztick/skf/'
 job_title = 'DFTB 4-Aminobenzoic Acid MeOH Clustering'
 gjf_dir = 'DFTB'
+
+## HF Parameters:
+#link0_cmds = ['%nosave','%mem=8gb','%nprocs=4']
+#job_keywords = '# opt freq rhf/3-21g geom=connectivity'
+#job_title = 'HF 4-Aminobenzoic Acid MeOH Clustering'
+#gjf_dir = 'HF'
 
 ## DFT Parameters:
 #link0_cmds = ['%mem=8gb','%nprocs=8']
@@ -256,7 +262,12 @@ for j in range(len(log_filenames)):
             print 'Connectivity should not be specified in DFTB jobs'
             keywords = ''.join(keywords.split(' geom=connectivity'))
             print 'geom=connectivity has been removed from the input keywords'
-
+            print keywords
+        if 'freq' in job_keywords:
+            print 'Frequency calculations are included in DFTB optimization jobs'
+            keywords = ''.join(keywords.split(' freq'))
+            print 'freq has been removed from the input keywords'
+            print keywords
         con_bool = False
 
 
