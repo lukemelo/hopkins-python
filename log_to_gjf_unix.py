@@ -2,9 +2,9 @@
 ##       Luke Melo        ##
 ## University of Waterloo ##
 ##     Hopkins Group      ##
-##       12/23/2014       ##
+##       01/01/2015       ##
 ##   log_to_gjf_unix.py   ##
-##         v1.1           ##
+##         v1.2           ##
 ############################
 """
 Created on Sun Dec 21 23:27:32 2014
@@ -26,21 +26,20 @@ backsteps = 0
 link0_cmds = []
 job_keywords = '# opt dftb scf=(maxconventionalcycles=150,xqc)'
 skf_dir = '/home/gaztick/skf/'
-job_title = 'DFTB: 4-Aminobenzoic Acid MeOH Clustering'
-new_gjf_dir = 'DFTB'
+job_title = 'DFTB 4-Aminobenzoic Acid MeOH Clustering'
+gjf_dir = 'DFTB'
 
 ## DFT Parameters:
 #link0_cmds = ['%mem=8gb','%nprocs=8']
 #job_keywords = '# opt freq b3lyp/6-31+g(d,p)'
-#job_title = 'DFT: 4-Aminobenzoic Acid MeOH Clustering'
-#new_gjf_dir = 'DFT'
+#job_title = 'DFT 4-Aminobenzoic Acid MeOH Clustering'
+#gjf_dir = 'DFT'
 
-## DFT GD3 Parameters:
+## DFT Parameters:
 #link0_cmds = ['%mem=8gb','%nprocs=8']
-#job_keywords = '# opt freq b3lyp/6-31+g(d,p)'
 #job_keywords = '# opt freq b3lyp/6-31+g(d,p) geom=connectivity EmpiricalDispersion=GD3'
-#job_title = 'DFT-GD3: 4-Aminobenzoic Acid MeOH Clustering'
-#new_gjf_dir = 'GD3'
+#job_title = 'DFT-GD3 4-Aminobenzoic Acid MeOH Clustering'
+#gjf_dir = 'GD3'
 
 
 ######################################
@@ -74,9 +73,9 @@ def dftb_gjfadd(skf_dir,l_atoms):
 #    keywords = keywords + '\n'
 
 import os
-if os.path.isdir(new_gjf_dir):
-    os.system('rm '+ new_gjf_dir + '/*.gjf')
-os.system('mkdir ' + new_gjf_dir)
+if os.path.isdir(gjf_dir):
+    os.system('rm '+gjf_dir+'/*.gjf')
+os.system('mkdir '+ gjf_dir)
 
 
 # Generate a list of log files in current directory to be processed
@@ -253,10 +252,12 @@ for j in range(len(log_filenames)):
     print keywords
 
     if 'dftb' in job_keywords:
-        print 'Connectivity should not be specified in DFTB jobs'
+        if 'geom=connectivity' in job_keywords:
+            print 'Connectivity should not be specified in DFTB jobs'
+            keywords = ''.join(keywords.split(' geom=connectivity'))
+            print 'geom=connectivity has been removed from the input keywords'
+
         con_bool = False
-        keywords = ''.join(keywords.split(' geom=connectivity'))
-        print 'geom=connectivity has been removed from the input keywords'
 
 
 
@@ -273,6 +274,8 @@ for j in range(len(log_filenames)):
                 con_index = init_con_line
         else:
             con_index = opt_con_lines[-1]
+    else:
+        con_bool = False
 
     # create a dictionary of bonds
     d_bonds = {}
@@ -287,6 +290,7 @@ for j in range(len(log_filenames)):
         #print temp_line
         #con_bool = False
         if 'R' in temp_line[2]:
+            #print temp_line
             atoms = temp_line[2].split('(')[1].split(')')[0].split(',')
             #print atoms
             d_bonds[int(atoms[0])].append([atoms[1],temp_line[3]])
@@ -313,7 +317,7 @@ for j in range(len(log_filenames)):
     #print con_write
 
     # write .gjf files
-    new_filenames.append(log_filenames[j][:-4] + '_' + new_gjf_dir + '_' + str(j+1) + '.gjf')
+    new_filenames.append(log_filenames[j][:-4] + '_' + str(j+1) + '.gjf')
     fw = open(new_filenames[j],'w')
     fw.writelines(link0_cmds)
     fw.write(keywords)
@@ -339,10 +343,13 @@ os.system('rm f.txt')
 
 print cd
 for j in range(len(new_filenames)):
-    os.system('mv ' + cd + '/' + new_filenames[j]  + ' ' + cd + '/' + new_gjf_dir + '/')
+    os.system('mv ' + cd + '/' + new_filenames[j]  + ' ' + cd + '/'+gjf_dir+'/')
 
 
 del link0_cmds
 del job_keywords
 del keywords
+
+
+
 
