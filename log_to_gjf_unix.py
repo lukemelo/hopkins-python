@@ -41,11 +41,11 @@ gjf_dir = 'DFTB'
 #job_title = 'DFT 4-Aminobenzoic Acid MeOH Clustering'
 #gjf_dir = 'DFT'
 
-## DFT Parameters:
+## DFT-GD3 Parameters:
 #link0_cmds = ['%mem=8gb','%nprocs=8']
 #job_keywords = '# opt freq b3lyp/6-31+g(d,p) geom=connectivity EmpiricalDispersion=GD3'
 #job_title = 'DFT-GD3 4-Aminobenzoic Acid MeOH Clustering'
-#gjf_dir = 'GD3'
+#gjf_dir = 'DFT_GD3'
 
 
 ######################################
