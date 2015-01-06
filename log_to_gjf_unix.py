@@ -86,7 +86,8 @@ os.system('mkdir '+ gjf_dir)
 
 # Generate a list of log files in current directory to be processed
 os.system('ls *.log > logs.csv')
-fo = open('logs.csv')
+#fo = open('logs.csv')
+fo = open('filemove.csv')
 log_filenames = fo.readlines()
 fo.close
 for i in range(len(log_filenames)):
