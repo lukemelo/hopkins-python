@@ -65,7 +65,7 @@ def dftb_gjfadd(skf_dir,l_atoms):
     l_write = []
     for i in range(len(l_atoms)):
         for j in range(len(l_atoms)):
-            line = '@' + skf_dir + l_atoms[i] + '-' + l_atoms[j] + '.skf\n'
+            line = '@' + skf_dir + l_atoms[i] + '-' + l_atoms[j] + '.skf/N\n'
             if line not in l_write:
                 l_write.append(line)
     return l_write
