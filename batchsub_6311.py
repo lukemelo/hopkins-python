@@ -19,8 +19,8 @@ fo.close
 l_write = []
 for i in range(len(input_filenames)):
     temp = input_filenames[i].split('.')[0]
-    #l_write.append('sqsub -q threaded --mpp=12g -n 8 -r 2d -o ' + temp + '.log g09 ' + temp + '.gjf\n')
-    l_write.append('sqsub -q threaded --mpp=5g -n 8 -r 10m -o ' + temp + '.log g09 ' + temp + '.gjf\n')
+    l_write.append('sqsub -q threaded --mpp=18g -n 8 -r 5d -o ' + temp + '.log g09 ' + temp + '.gjf\n')
+    #l_write.append('sqsub -q threaded --mpp=5g -n 8 -r 10m -o ' + temp + '.log g09 ' + temp + '.gjf\n')
 
 fw = open('nlgn_batchsub','w')
 fw.writelines(l_write)
