@@ -18,26 +18,26 @@ Some text explaining everything goes here
 errors = True
 #errors = False
 #####################################################
-# Use optimized/last geometry in *.log files
+# Use n lowest energy structures for conversion
 lowest_energy = 3
-# Backstep to initial geometry from *.gjf input
+# Use all structures for conversion regardless of energy
 #lowest_energy = 2**32
 #####################################################
 #####################################################
-# Use optimized/last geometry in *.log files
+# Use the optimized/last geometry found in *.log files
 backsteps = 0
-# Backstep n SCF iterations
+# Backstep n SCF iterations for geometry
 #backsteps = 10
 # Backstep to initial geometry from *.gjf input
 #backsteps = 2**32
 #####################################################
 
 # DFTB Parameters
-#link0_cmds = []
-#job_keywords = '# opt dftb scf=(maxconventionalcycles=150,xqc)'
-#skf_dir = '/home/gaztick/skf/'
-#job_title = 'DFTB 4-Aminobenzoic Acid MeOH Clustering'
-#gjf_dir = 'DFTB'
+link0_cmds = []
+job_keywords = '# opt dftb scf=(maxconventionalcycles=150,xqc)'
+skf_dir = '/home/gaztick/skf/'
+job_title = 'DFTB 4-Aminobenzoic Acid MeOH Clustering'
+gjf_dir = 'DFTB'
 
 ## HF Parameters:
 #link0_cmds = ['%nosave','%mem=8gb','%nprocs=4']
@@ -58,10 +58,10 @@ backsteps = 0
 #gjf_dir = 'DFT_GD3'
 
 ## 6-311 DFT-GD3 Parameters:
-link0_cmds = ['%mem=12gb','%nprocs=8']
-job_keywords = '# opt freq b3lyp/6-311++g(d,p) geom=connectivity EmpiricalDispersion=GD3'
-job_title = '6-311++g(d,p) DFT-GD3 4-Aminobenzoic Acid MeOH Clustering'
-gjf_dir = '6311'
+#link0_cmds = ['%mem=12gb','%nprocs=8']
+#job_keywords = '# opt freq b3lyp/6-311++g(d,p) geom=connectivity EmpiricalDispersion=GD3'
+#job_title = '6-311++g(d,p) DFT-GD3 4-Aminobenzoic Acid MeOH Clustering'
+#gjf_dir = '6311'
 
 ######################################
 
@@ -89,9 +89,6 @@ def dftb_gjfadd(skf_dir,l_atoms):
 ######################################
 
 import os
-
-import subprocess
-
 
 def last20(log_filename):
     """
@@ -208,50 +205,14 @@ if errors and lowest_energy > 0:
 elif errors:
     log_filenames = l_errors
 	
-    
-
-    
-#for i in range(len(l_errors)):
-    #print l_errors[i]
-   
-######wrt_srt = ''    
-######for i in range(len(l_write)):
-    ######wrt_srt = wrt_srt + l_write[i]   
-######print wrt_srt
-    
-######fw = open('poo.csv','w')
-######fw.writelines(l_write)
-######fw.close
-######print 'job_summary.csv created in current directory'        
-
-
 
 #####################################################################################
-
-
-## add '\n' to link0_cmds and keywords if parameters are specified
-#if 'link0_cmds' in locals():
-#    for i in range(len(link0_cmds)):
-#        link0_cmds[i] = link0_cmds[i] + '\n'
-#if 'keywords' in locals():
-#    keywords = keywords + '\n'
 
 
 if os.path.isdir(gjf_dir):
     os.system('rm '+gjf_dir+'/*.gjf')
 os.system('mkdir '+ gjf_dir)
 
-
-####### Generate a list of log files in current directory to be processed
-#######os.system('ls *.log > logs.csv')
-#######fo = open('logs.csv')
-#######fo = open('filemove.csv')
-#######fo = open('job_summary.csv')
-######log_filenames = fo.readlines()
-######fo.close
-######for i in range(len(log_filenames)):
-    ######log_filenames[i] = log_filenames[i].split('\n')[0]
-#######os.system('rm job_summary.csv')
 
 # For dftb *.skf filename generation
 # atom_map[atomic # - 1] --> atomic label [string]
@@ -406,13 +367,7 @@ for j in range(len(log_filenames)):
         temp_line = atoms[i] + '\t' + x[i] + '\t' + y[i] + '\t' + z[i] + '\n'
         cart_write.append(temp_line)
 
-#    print 'Optimized Connectivities: '
-#    print opt_con_lines
-#    print 'Initial Connectivity: ' + str(init_con_line)
-#    print opt_con_lines == []
-#    print init_con_line > 0
-
-
+	
     con_bool = True
     con_index = 0
     print keywords
