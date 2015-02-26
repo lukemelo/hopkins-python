@@ -100,7 +100,7 @@ for i in range(len(l_norms)):
     lines = fo.readlines()
     fo.close
     HF = ''
-    print lines
+    #print lines
     newstr = ''
     for line in lines:
         newstr = newstr + line.split('\n')[0]
