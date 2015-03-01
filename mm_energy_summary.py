@@ -93,9 +93,17 @@ for i in range(len(filenames)):
                 l_errors.append(temp[0]+'.log'+','+termination_status+'\n')
     
 print ''
-                
+     
+percents = [0.0,0.25,0.5,0.75,1.0]
+j = 0
+
 ## get energies of normally terminated logs                
 for i in range(len(l_norms)):
+    progress = float(i)/len(l_norms)
+    if progress >= percents[j]:
+        print str(100*percents[j]) + '% complete'
+        j += 1
+    
     fo = open(l_norms[i])
     lines = fo.readlines()
     fo.close
@@ -103,14 +111,22 @@ for i in range(len(l_norms)):
     #print lines
     newstr = ''
     for line in lines:
-        newstr = newstr + line.split('\n')[0]
-    hf_index = newstr.find('HF=')
-    hf_index += 3
-    HF = newstr[hf_index:hf_index+10]
+        newstr = newstr + ''.join(line.split('\n')[0].split())
+    
+    newstrs = newstr.split('\\')
+    for x in newstrs:
+        if 'HF=' in x:
+            HF = x.split('HF=')[-1]
+    #print HF
+    #hf_index = newstr.find('HF=')
+    #hf_index += 3
+    #HF = newstr[hf_index:hf_index+10]
     l_norms[i] = l_norms[i] + ',' + HF + '\n'
     
     #print l_norms[i]
 
+print '100% complete'    
+    
 l_write = l_norms + l_errors 
 #for i in range(len(l_errors)):
     #print l_errors[i]
@@ -119,8 +135,8 @@ wrt_srt = ''
 for i in range(len(l_write)):
     wrt_srt = wrt_srt + l_write[i]   
     
-fw = open('job_summary.csv','w')
+fw = open('mm_job_summary.csv','w')
 fw.writelines([wrt_srt])
 fw.close
-print 'job_summary.csv created in current directory'            
+print 'mm_job_summary.csv created in current directory'            
         
