@@ -2,9 +2,9 @@
 ##       Luke Melo        ##
 ## University of Waterloo ##
 ##     Hopkins Group      ##
-##       11/24/2014       ##
+##       03/10/2015       ##
 ##     cpc_summary.py     ##
-##         v1.0           ##
+##         v1.1           ##
 ############################
 
 import subprocess
@@ -133,5 +133,5 @@ for i in range(len(l_write)):
 fw = open('cpc_job_summary.csv','w')
 fw.writelines([wrt_srt])
 fw.close
-print 'job_summary.csv created in current directory'            
+print ‘cpc_job_summary.csv created in current directory'            
         
