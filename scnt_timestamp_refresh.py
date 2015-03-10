@@ -15,7 +15,7 @@ Run this program to update the timestamp of eall files in the current directory
 """
 import os
 
-os.system('ls > filedir.csv')
+os.system('ls -p | grep -v / > filedir.csv')
     
 fo = open('filedir.csv', 'r')
 filenames = fo.readlines()
