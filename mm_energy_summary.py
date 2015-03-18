@@ -22,6 +22,7 @@ def last20(log_filename):
     """
     fo = open(log_filename, "rw+")
     lines = fo.readlines()
+	fo.close()
     last20_lines = lines[-20:]
     #for i in range(len(last20_lines)):
         #print last20_lines[i]
