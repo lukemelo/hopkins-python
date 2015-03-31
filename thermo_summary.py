@@ -74,7 +74,6 @@ subprocess.call(['ls > filedir.csv'],shell=True)
 fo = open('filedir.csv', 'r')
 filenames = fo.readlines()
 fo.close
-subprocess.call('rm filedir.csv')
 print 'Processing files in current directory...'
 
 l_norms = []
@@ -125,7 +124,7 @@ for i in range(len(l_norms)):
             Sum_ETFE = line.split()[-1]        
             
     l_norms[i] = l_norms[i] + ',' + ZPE + ',' + TCEn + ',' + TCEnth + ',' + TCGFE + ',' + Sum_ZPEs + ',' + Sum_TEn + ',' + Sum_TEnth+ ',' + Sum_ETFE +'\n'
-    print l_norms[i]
+    #print l_norms[i]
     #print l_norms[i]
 
 l_write = l_norms + l_errors 
